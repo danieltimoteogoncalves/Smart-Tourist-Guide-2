@@ -1,8 +1,10 @@
-from flask import Flask, render_template, request
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 import requests
 import datetime
 
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:5173"])  # Allow only your React dev server
 
 weather_key = "2b85de9d310ba0d2efc27f78d5403e30"
 activities_key = "m26Sf6eS2jXKHKp0kPzlLWOxS_d1w0V3nCILO1ax"
@@ -78,16 +80,22 @@ def get_filtered_events(api_key, lat, lon, weather_desc):
 
     return filtered_events
 
-@app.route("/", methods=["GET", "POST"])
-def index():
-    events = []
-    weather = None
-    if request.method == "POST":
-        city = request.form["city"]
-        weather = get_weather(weather_key, city)
-        if weather:
-            events = get_filtered_events(activities_key, weather["lat"], weather["lon"], weather["desc_raw"])
-    return render_template("index.html", weather=weather, events=events)
+@app.route("/api", methods=["GET"])
+def api():
+    city = request.args.get("city")
+    if not city:
+        return jsonify({"error": "Missing city parameter"}), 400
+
+    weather = get_weather(weather_key, city)
+    if not weather:
+        return jsonify({"error": "Could not fetch weather data"}), 500
+
+    events = get_filtered_events(activities_key, weather["lat"], weather["lon"], weather["desc_raw"])
+
+    return jsonify({
+        "weather": weather,
+        "events": events
+    })
 
 if __name__ == "__main__":
     app.run(debug=True)
