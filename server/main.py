@@ -46,15 +46,17 @@ def get_filtered_events(api_key, lat, lon, weather_desc):
     }
 
     today = datetime.datetime.utcnow().date()
-    start_date = today.isoformat() + "T00:00:00Z"
-    end_date = today.isoformat() + "T23:59:59Z"
+    start_date = today.isoformat() #+ "T00:00:00Z"
+    #end_date = today.isoformat() + "T23:59:59Z"
 
     params = {
-        "start.gte": start_date,
-        "start.lte": end_date,
-        "limit": 50,
+        "limit": 10,
+        "active.gte": start_date,
+        "end.lte": start_date,
         "within": f"10km@{lat},{lon}",  # Increased radius
-        "sort": "rank"
+        "sort": "rank",
+        "start.lte": start_date,
+        "state": "active"
     }
 
     restricted_categories = get_restricted_categories_by_weather(weather_desc)
@@ -97,7 +99,7 @@ def api():
 
     weather = get_weather(weather_key, city)
     if not weather:
-        return jsonify({"error": "Could not fetch weather data"}), 500
+        return jsonify({"error": "City not found or invalid"}), 404
 
     events = get_filtered_events(activities_key, weather["lat"], weather["lon"], weather["desc_raw"])
 
@@ -105,6 +107,7 @@ def api():
         "weather": weather,
         "events": events
     })
+
 
 if __name__ == "__main__":
     app.run(debug=True)
