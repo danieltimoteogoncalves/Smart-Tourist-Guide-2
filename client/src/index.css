@@ -1,11 +1,11 @@
 :root {
   --primary-color: #646cff;
   --primary-hover: #535bf2;
-  --bg-dark: #242424;
   --bg-light: #ffffff;
+  --bg-dark: #121212; /* Define bg-dark */
   --text-dark: rgba(255, 255, 255, 0.87);
   --text-light: #213547;
-
+  
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: 400;
   line-height: 1.6;
@@ -13,77 +13,239 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
   color-scheme: light dark;
   color: var(--text-dark);
   background-color: var(--bg-dark);
 }
 
-body {
+html, body {
   margin: 0;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 320px;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  align-items: flex-start;
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+  font-family: inherit;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
   min-height: 100vh;
   background-color: var(--bg-dark);
-  transition: background-color 0.3s, color 0.3s;
+  color: var(--text-dark);
+  font-family: inherit;
+  display: flex;
+  justify-content: center;
+  /* REMOVE align-items: center; para não centrar verticalmente */
+  align-items: flex-start;
+  /* permite scroll se conteúdo for maior */
+  overflow-y: auto;
 }
 
-h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  line-height: 1.2;
-  text-align: center;
+.app {
+  width: 99vw;
+  /* REMOVE height fixo */
+  /* height: 120vh; */
+  color: #fff;
+  position: relative;
+  transition: background 0.5s ease;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: var(--bg-dark);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;  /* dá um padding vertical para separar do topo */
+  box-sizing: border-box;
+  border-radius: 0;
 }
 
-input[type="text"] {
+/* Container interno para o conteúdo, com limite de largura e fundo semitransparente */
+.container {
+  width: 100%;
+  max-width: 720px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Backgrounds dinâmicos para diferentes condições */
+.bg-clear-sky {
+  background-image: url('./assets/clearsky.jpeg');
+}
+
+.bg-few-clouds {
+  background-image: url('./assets/poucasnuvens.jpg');
+}
+
+.bg-scattered-clouds {
+  background-image: url('./assets/scatteredclouds.jpg');
+}
+
+.bg-broken-clouds {
+  background-image: url('./assets/broken-clouds-1537880.jpg');
+}
+
+.bg-shower-rain {
+  background-image: url('./assets/showerrain.jpg');
+}
+
+.bg-rain {
+  background-image: url('./assets/rain.jpg');
+}
+
+.bg-thunderstorm {
+  background-image: url('./assets/thunderstorm.jpg');
+}
+
+.bg-snow {
+  background-image: url('./assets/snow.jpg');
+}
+
+.bg-mist {
+  background-image: url('./assets/mist.jpg');
+}
+
+/* Estilos gerais de conteúdo */
+
+.search-section {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: var(--text-dark);
+}
+
+.input-city {
   padding: 0.6em 1em;
   font-size: 1rem;
   border-radius: 8px;
   border: 1px solid #ccc;
-  margin-right: 1rem;
   outline: none;
   transition: border 0.2s;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
 }
 
-input[type="text"]:focus {
+.input-city::placeholder {
+  color: rgba(255, 255, 255, 0.685);
+}
+
+.input-city:focus {
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(100, 108, 255, 0.2);
+  box-shadow: 0 0 0 3px rgba(100, 185, 255, 0.726);
 }
 
-button {
+.btn-search {
   border-radius: 8px;
   border: none;
   padding: 0.6em 1.2em;
   font-size: 1rem;
-  font-weight: 600;
-  background-color: var(--primary-color);
+  font-weight: 400;
+  background-color: rgba(255, 255, 255, 0.1);
   color: #fff;
   cursor: pointer;
   transition: background-color 0.25s, box-shadow 0.2s;
+  white-space: nowrap;
 }
 
-button:hover {
+.btn-search:hover {
   background-color: var(--primary-hover);
   box-shadow: 0 4px 14px rgba(83, 91, 242, 0.4);
 }
 
-a {
-  font-weight: 500;
-  color: var(--primary-color);
-  text-decoration: none;
-  transition: color 0.2s;
+.weather-section {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  color: var(--text-dark);
 }
 
-a:hover {
-  color: var(--primary-hover);
+.weather-info {
+  color: var(--text-dark);
+}
+
+.weather-title {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.weather-details {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.weather-details li {
+  margin-bottom: 0.6rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.events-section {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  color: var(--text-dark);
+}
+
+.events-title {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.events-list-wrapper {
+  margin-top: 1rem;
+}
+
+.events-subtitle {
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.events-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.event-item {
+  margin-bottom: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.no-events-message {
+  font-style: italic;
+  margin-top: 1rem;
+  color: var(--text-dark);
 }
 
 ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 li {
@@ -94,6 +256,20 @@ li {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
+/* Responsividade */
+@media (max-width: 480px) {
+  .search-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .input-city,
+  .btn-search {
+    max-width: 100%;
+  }
+}
+
+/* Tema claro */
 @media (prefers-color-scheme: light) {
   :root {
     color: var(--text-light);
@@ -104,9 +280,13 @@ li {
     background-color: var(--bg-light);
   }
 
-  li {
+  .weather-section,
+  .events-section,
+  li,
+  .event-item {
     background-color: #f0f0f0;
     color: #000;
+    box-shadow: none;
   }
 
   button {
