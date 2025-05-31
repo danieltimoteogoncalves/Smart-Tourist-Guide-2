@@ -52,11 +52,14 @@ def get_filtered_events(api_key, lat, lon, weather_desc):
     params = {
         "start.gte": start_date,
         "start.lte": end_date,
-        "limit": 10,
-        "within": f"10km@{lat},{lon}"
+        "limit": 50,
+        "within": f"10km@{lat},{lon}",  # Increased radius
+        "sort": "rank"
     }
 
     restricted_categories = get_restricted_categories_by_weather(weather_desc)
+    print("Restricted categories:", restricted_categories)
+
     all_events = []
     next_url = url
     next_params = params
@@ -64,21 +67,27 @@ def get_filtered_events(api_key, lat, lon, weather_desc):
     while next_url:
         response = requests.get(next_url, headers=headers, params=next_params)
         if response.status_code != 200:
+            print("Error fetching events:", response.text)
             break
 
         data = response.json()
         events = data.get('results', [])
         all_events.extend(events)
-
         next_url = data.get('next')
         next_params = None
 
+    print(f"Fetched {len(all_events)} events total.")
+
+    for e in all_events:
+        print(f"{e.get('rank', 'n/a')}: {e.get('category')} - {e.get('title')}")
+
     filtered_events = [
         event for event in all_events
-        if not any(cat in restricted_categories for cat in event.get('category', '').split(','))
+        if event.get('category') not in restricted_categories
     ][:10]
 
     return filtered_events
+
 
 @app.route("/api", methods=["GET"])
 def api():
