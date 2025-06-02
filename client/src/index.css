@@ -77,6 +77,15 @@ body, html, #root {
   text-align: center;
   margin-bottom: 1.2rem;
   font-weight: 600;
+  font-size: 30px;
+}
+
+/* Dados do tempo */
+.weather-temp {
+  text-align: center;
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+  font-size: 50px;
 }
 
 /* Dados do tempo lado a lado */
@@ -119,7 +128,7 @@ body, html, #root {
   font-size: 1.4rem;
   margin-bottom: 0.5rem;
   font-weight: 600;
-  
+  font-size: 30px;
 }
 
 .events-subtitle {
