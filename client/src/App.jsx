@@ -101,7 +101,11 @@ function App() {
                 <br></br>
                 {events.map((event, i) => (
                   <li key={i} className="event-item">
-                    <strong>{event.title}</strong> - {event.start.slice(0, 10)}
+                    <strong>{event.title}</strong> – {" "}
+                    {new Date(event.start_local).toLocaleString("pt-BR", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                   </li>
                 ))}
               </ul>
