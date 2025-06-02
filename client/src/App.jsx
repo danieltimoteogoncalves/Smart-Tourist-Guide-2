@@ -72,8 +72,9 @@ function App() {
               <br></br>
               <div className="weather-data">
                 <div className="weather-item">
-                  <div className="value">{weather.temp} °C</div>
-                  <div className="label">Temperatura</div>
+                  <div className="value">{weather.feels_like} °C</div>
+                  <div className="label">Sensação térmica</div>
+
                 </div>
                 <div className="weather-item">
                   <div className="value">{weather.humidity}%</div>

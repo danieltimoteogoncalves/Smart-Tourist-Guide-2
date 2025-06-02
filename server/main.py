@@ -24,7 +24,8 @@ def get_weather(api_key, city):
             "wind": data['wind']['speed'],
             "desc_raw": description,
             "lat": data['coord']['lat'],
-            "lon": data['coord']['lon']
+            "lon": data['coord']['lon'],
+            "feels_like": data['main']['feels_like'],
         }
         return weather_info
     else:
