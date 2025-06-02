@@ -1,85 +1,143 @@
-:root {
-  --primary-color: #646cff;
-  --primary-hover: #535bf2;
-  --bg-light: #ffffff;
-  --bg-dark: #121212; /* Define bg-dark */
-  --text-dark: rgba(255, 255, 255, 0.87);
-  --text-light: #213547;
-  
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-weight: 400;
-  line-height: 1.6;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color-scheme: light dark;
-  color: var(--text-dark);
-  background-color: var(--bg-dark);
-}
-
-html, body {
+/* Reset básico e corpo */
+body, html, #root {
   margin: 0;
   padding: 0;
-  width: 100%;
   height: 100%;
-  align-items: flex-start;
-  background-color: var(--bg-dark);
-  color: var(--text-dark);
-  font-family: inherit;
-}
-
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  min-height: 100vh;
-  background-color: var(--bg-dark);
-  color: var(--text-dark);
-  font-family: inherit;
-  display: flex;
-  justify-content: center;
-  /* REMOVE align-items: center; para não centrar verticalmente */
-  align-items: flex-start;
-  /* permite scroll se conteúdo for maior */
-  overflow-y: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #222;
+  color: white;
 }
 
 .app {
-  width: 99vw;
-  /* REMOVE height fixo */
-  /* height: 120vh; */
-  color: #fff;
-  position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem 1rem;
   transition: background 0.5s ease;
+  position: relative;
+  overflow-x: hidden;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: var(--bg-dark);
+}
 
+/* Container central */
+.container {
+  background: rgba(0,0,0,0.55);
+  padding: 1.8rem 2rem;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 0 15px rgba(0,0,0,0.9);
+  position: relative;
+  z-index: 1;
+  color: white;
+}
+
+/* Pesquisa */
+.search-section {
+  display: flex;
+  margin-bottom: 1.5rem;
+}
+
+.input-city {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px 0 0 6px;
+  border: none;
+  outline: none;
+}
+
+.btn-search {
+  padding: 0 1.2rem;
+  font-size: 1rem;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  border-radius: 0 6px 6px 0;
+  transition: background-color 0.3s ease;
+}
+
+.btn-search:hover {
+  background-color: #0056b3;
+}
+
+/* Título do tempo */
+.weather-title {
+  text-align: center;
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+}
+
+/* Dados do tempo lado a lado */
+.weather-data {
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 2rem 0;  /* dá um padding vertical para separar do topo */
-  box-sizing: border-box;
-  border-radius: 0;
+  gap: 3rem;
+  flex-wrap: nowrap;
 }
 
-/* Container interno para o conteúdo, com limite de largura e fundo semitransparente */
-.container {
-  width: 100%;
-  max-width: 720px;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 12px;
-  padding: 1rem 2rem;
-  box-sizing: border-box;
-  color: white;
+.weather-item {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  align-items: center;
+  min-width: 80px;
 }
 
-/* Backgrounds dinâmicos para diferentes condições */
+.weather-item .value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  text-align: center;
+}
+
+.weather-item .label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: capitalize;
+  user-select: none;
+  text-align: center;
+}
+
+/* Eventos */
+.events-section {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.events-title {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.events-subtitle {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.events-list {
+  list-style: none;
+  padding: 0 0.5rem;
+  text-align: left;
+  margin: 0;
+}
+
+.event-item {
+  margin-bottom: 0.6rem;
+  font-size: 0.95rem;
+}
+
+.no-events-message {
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Fundos para diferentes condições meteorológicas */
 .bg-clear-sky {
   background-image: url('./assets/clearsky.jpeg');
 }
@@ -96,12 +154,26 @@ html, body {
   background-image: url('./assets/broken-clouds-1537880.jpg');
 }
 
-.bg-shower-rain {
-  background-image: url('./assets/showerrain.jpg');
+.bg-clear {
+  background-image: url('./assets/clear.jpg');
 }
 
+.bg-overcast-clouds {
+  background-image: url('./assets/overcastclouds.jpg');
+}
+
+.bg-light-rain,
+.bg-moderate-rain,
+.bg-heavy-rain,
+.bg-extreme-rain,
+.bg-freezing-rain,
+.bg-shower-rain,
 .bg-rain {
   background-image: url('./assets/rain.jpg');
+}
+
+.bg-ragged-shower-rain {
+  background-image: url('./assets/raggedshowerrain.jpg');
 }
 
 .bg-thunderstorm {
@@ -114,182 +186,4 @@ html, body {
 
 .bg-mist {
   background-image: url('./assets/mist.jpg');
-}
-
-/* Estilos gerais de conteúdo */
-
-.search-section {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  color: var(--text-dark);
-}
-
-.input-city {
-  padding: 0.6em 1em;
-  font-size: 1rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  outline: none;
-  transition: border 0.2s;
-  width: 100%;
-  max-width: 300px;
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
-.input-city::placeholder {
-  color: rgba(255, 255, 255, 0.685);
-}
-
-.input-city:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(100, 185, 255, 0.726);
-}
-
-.btn-search {
-  border-radius: 8px;
-  border: none;
-  padding: 0.6em 1.2em;
-  font-size: 1rem;
-  font-weight: 400;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.25s, box-shadow 0.2s;
-  white-space: nowrap;
-}
-
-.btn-search:hover {
-  background-color: var(--primary-hover);
-  box-shadow: 0 4px 14px rgba(83, 91, 242, 0.4);
-}
-
-.weather-section {
-  background-color: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  padding: 1.5rem 2rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  color: var(--text-dark);
-}
-
-.weather-info {
-  color: var(--text-dark);
-}
-
-.weather-title {
-  margin-top: 0;
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-
-.weather-details {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.weather-details li {
-  margin-bottom: 0.6rem;
-  padding: 0.3rem 0.5rem;
-  border-radius: 5px;
-  background-color: rgba(0, 0, 0, 0.1);
-  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
-}
-
-.events-section {
-  background-color: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  padding: 1.5rem 2rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  color: var(--text-dark);
-}
-
-.events-title {
-  margin-top: 0;
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-
-.events-list-wrapper {
-  margin-top: 1rem;
-}
-
-.events-subtitle {
-  margin-bottom: 0.75rem;
-  font-weight: 500;
-}
-
-.events-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.event-item {
-  margin-bottom: 0.75rem;
-  padding: 0.75rem 1rem;
-  border-radius: 6px;
-  background-color: rgba(0, 0, 0, 0.1);
-  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
-}
-
-.no-events-message {
-  font-style: italic;
-  margin-top: 1rem;
-  color: var(--text-dark);
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-li {
-  margin-bottom: 0.75rem;
-  padding: 0.75rem 1rem;
-  border-radius: 6px;
-  background-color: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-
-/* Responsividade */
-@media (max-width: 480px) {
-  .search-section {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .input-city,
-  .btn-search {
-    max-width: 100%;
-  }
-}
-
-/* Tema claro */
-@media (prefers-color-scheme: light) {
-  :root {
-    color: var(--text-light);
-    background-color: var(--bg-light);
-  }
-
-  body {
-    background-color: var(--bg-light);
-  }
-
-  .weather-section,
-  .events-section,
-  li,
-  .event-item {
-    background-color: #f0f0f0;
-    color: #000;
-    box-shadow: none;
-  }
-
-  button {
-    background-color: var(--primary-color);
-  }
 }

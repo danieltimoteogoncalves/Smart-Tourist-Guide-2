@@ -5,14 +5,23 @@ function App() {
   const [weather, setWeather] = useState(null);
   const [events, setEvents] = useState([]);
 
-  const fetchWeatherAndEvents = async () => {
-    const res = await fetch(`http://localhost:5000/api?city=${city}`);
-    const data = await res.json();
-    setWeather(data.weather);
-    setEvents(data.events);
+  const fetchWeatherAndEvents = () => {
+    if (!city.trim()) return;
+
+    fetch(`http://localhost:5000/api?city=${city}`)
+      .then(res => res.json())
+      .then(data => {
+        setWeather(data.weather);
+        setEvents(data.events);
+      })
+      .catch(error => {
+        console.error('Erro ao buscar dados:', error);
+        setWeather(null);
+        setEvents([]);
+      });
   };
 
-  // Converte descrição do tempo em classe CSS para background
+  // Função que cria a classe de fundo baseada na descrição do tempo
   const getWeatherClass = (desc) => {
     if (!desc) return '';
     return 'bg-' + desc.toLowerCase().replace(/\s+/g, '-');
@@ -21,7 +30,7 @@ function App() {
   return (
     <div className={`app ${getWeatherClass(weather?.description)}`}>
       <div className="container">
-        {/* Área de pesquisa */}
+        {/* Pesquisa */}
         <div className="search-section">
           <input
             type="text"
@@ -29,30 +38,43 @@ function App() {
             placeholder="Escreve o nome da cidade"
             value={city}
             onChange={(e) => setCity(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && fetchWeatherAndEvents()}
           />
           <button className="btn-search" onClick={fetchWeatherAndEvents}>
             Pesquisar
           </button>
         </div>
 
-        {/* Informação do tempo */}
+        {/* Tempo */}
         <div className="weather-section">
           {weather && (
-            <div className="weather-info">
+            <>
               <h2 className="weather-title">
                 Tempo em {weather.city}, {weather.country}
               </h2>
-              <ul className="weather-details">
-                <li><strong>Descrição:</strong> {weather.description}</li>
-                <li><strong>Temperatura:</strong> {weather.temp} °C</li>
-                <li><strong>Humidade:</strong> {weather.humidity}%</li>
-                <li><strong>Vento:</strong> {weather.wind} m/s</li>
-              </ul>
-            </div>
+              <div className="weather-data">
+                <div className="weather-item">
+                  <div className="value">{weather.temp} °C</div>
+                  <div className="label">Temperatura</div>
+                </div>
+                <div className="weather-item">
+                  <div className="value">{weather.humidity}%</div>
+                  <div className="label">Humidade</div>
+                </div>
+                <div className="weather-item">
+                  <div className="value">{weather.wind} m/s</div>
+                  <div className="label">Vento</div>
+                </div>
+                <div className="weather-item">
+                  <div className="value" style={{ textTransform: 'capitalize' }}>{weather.description}</div>
+                  <div className="label">Descrição</div>
+                </div>
+              </div>
+            </>
           )}
         </div>
 
-        {/* Lista de eventos */}
+        {/* Eventos */}
         <div className="events-section">
           <h3 className="events-title">Eventos na cidade:</h3>
           {events.length > 0 ? (
@@ -60,15 +82,10 @@ function App() {
               <h4 className="events-subtitle">Eventos recomendados para hoje:</h4>
               <ul className="events-list">
                 {events.map((event, i) => (
-                <li key={i} className="event-item">
-                  <strong>{event.title}</strong> – Começa às{" "}
-                  {new Date(event.start_local).toLocaleString("pt-BR", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </li>
-              ))}
-
+                  <li key={i} className="event-item">
+                    <strong>{event.title}</strong> - {event.start.slice(0, 10)}
+                  </li>
+                ))}
               </ul>
             </div>
           ) : weather ? (
