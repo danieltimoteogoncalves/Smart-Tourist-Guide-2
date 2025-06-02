@@ -44,16 +44,16 @@ def get_filtered_events(api_key, lat, lon, weather_desc):
         "Authorization": f"Bearer {api_key}",
         "Accept": "application/json"
     }
-
+    
     today = datetime.datetime.utcnow().date()
     start_date = today.isoformat() #+ "T00:00:00Z"
     #end_date = today.isoformat() + "T23:59:59Z"
 
-    params = {
+    params = { #Mostra eventos que estao ativos (nao cancelados ou encerrados) hoje. Podem ter começado anteriormente 
         "limit": 10,
         "active.gte": start_date,
         "end.lte": start_date,
-        "within": f"10km@{lat},{lon}",  # Increased radius
+        "within": f"10km@{lat},{lon}", 
         "sort": "rank",
         "start.lte": start_date,
         "state": "active"
@@ -107,7 +107,6 @@ def api():
         "weather": weather,
         "events": events
     })
-
 
 if __name__ == "__main__":
     app.run(debug=True)
