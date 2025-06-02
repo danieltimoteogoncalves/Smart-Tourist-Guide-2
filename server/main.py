@@ -33,10 +33,10 @@ def get_weather(api_key, city):
 def get_restricted_categories_by_weather(weather_desc):
     weather_desc = weather_desc.lower()
     if "rain" in weather_desc:
-        return ["sports", "concerts"]
+        return ["sports", "concerts", "severe-weather"]
     elif "snow" in weather_desc:
-        return ["sports"]
-    return []
+        return ["sports", "severe-weather"]
+    return ["severe-weather"]
 
 def get_filtered_events(api_key, lat, lon, weather_desc):
     url = "https://api.predicthq.com/v1/events/"

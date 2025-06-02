@@ -60,10 +60,15 @@ function App() {
               <h4 className="events-subtitle">Eventos recomendados para hoje:</h4>
               <ul className="events-list">
                 {events.map((event, i) => (
-                  <li key={i} className="event-item">
-                    <strong>{event.title} </strong> - {event.start.slice(0, 10)}
-                  </li>
-                ))}
+                <li key={i} className="event-item">
+                  <strong>{event.title}</strong> – Começa às{" "}
+                  {new Date(event.start_local).toLocaleString("pt-BR", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </li>
+              ))}
+
               </ul>
             </div>
           ) : weather ? (
