@@ -4,22 +4,30 @@ function App() {
   const [city, setCity] = useState('');
   const [weather, setWeather] = useState(null);
   const [events, setEvents] = useState([]);
+  const [error, setError] = useState(null);
 
   const fetchWeatherAndEvents = () => {
-    if (!city.trim()) return;
+  if (!city.trim()) return;
 
-    fetch(`http://localhost:5000/api?city=${city}`)
-      .then(res => res.json())
-      .then(data => {
-        setWeather(data.weather);
-        setEvents(data.events);
-      })
-      .catch(error => {
-        console.error('Erro ao buscar dados:', error);
-        setWeather(null);
-        setEvents([]);
-      });
-  };
+  fetch(`http://localhost:5000/api?city=${city}`)
+    .then(async res => {
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Erro ao buscar dados');
+      }
+
+      setWeather(data.weather);
+      setEvents(data.events);
+      setError(null); // limpa erro anterior
+    })
+    .catch(error => {
+      console.error('Erro ao buscar dados:', error);
+      setWeather(null);
+      setEvents([]);
+      setError(error.message);
+    });
+};
 
   // Função que cria a classe de fundo baseada na descrição do tempo
   const getWeatherClass = (desc) => {
@@ -43,6 +51,12 @@ function App() {
           <button className="btn-search" onClick={fetchWeatherAndEvents}>
             Pesquisar
           </button>
+
+          {error && (
+        <div className="error-message">
+            ⚠️ {error}
+        </div>
+)}
         </div>
 
         {/* Tempo */}
@@ -50,8 +64,12 @@ function App() {
           {weather && (
             <>
               <h2 className="weather-title">
-                Tempo em {weather.city}, {weather.country}
+                 {weather.city}
               </h2>
+              <h2 className="weather-temp">
+                {weather.temp} °C
+              </h2>
+              <br></br>
               <div className="weather-data">
                 <div className="weather-item">
                   <div className="value">{weather.temp} °C</div>
@@ -79,8 +97,8 @@ function App() {
           <h3 className="events-title">Eventos na cidade:</h3>
           {events.length > 0 ? (
             <div className="events-list-wrapper">
-              <h4 className="events-subtitle">Eventos recomendados para hoje:</h4>
               <ul className="events-list">
+                <br></br>
                 {events.map((event, i) => (
                   <li key={i} className="event-item">
                     <strong>{event.title}</strong> - {event.start.slice(0, 10)}
