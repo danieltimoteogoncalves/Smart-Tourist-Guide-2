@@ -4,9 +4,15 @@ body, html, #root {
   padding: 0;
   height: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #222;
+  background-image: url('./assets/default.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.3); /* preta semitransparente */
+  background-blend-mode: darken;
   color: white;
 }
+
 
 
 /* Estilo global para o app */
@@ -41,6 +47,7 @@ body, html, #root {
 .search-section {
   display: flex;
   margin-bottom: 1.5rem;
+  position: relative;
 }
 
 /* Campo de entrada estilizado */
@@ -51,13 +58,12 @@ body, html, #root {
   border-radius: 6px 0 0 6px;
   border: none;
   outline: none;
-  background-color: rgba(240, 248, 255, 0.521);
-  color: white
-
+  background-color: rgba(240, 248, 255, 0.3);
+  color: white;
 }
 
 /* Placeholder estilizado */
-.input-city::placeholder {/* Placeholder estilizado */
+.input-city::placeholder {
   color: rgba(255, 255, 255, 0.7);
 }
 
@@ -73,9 +79,41 @@ body, html, #root {
   transition: background-color 0.3s ease;
 }
 
-/* Botão de pesquisa */
 .btn-search:hover {
   background-color: #525252;
+}
+
+/* Histórico de pesquisas */
+.search-history {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.7);
+  border-radius: 0 0 6px 6px;
+  max-height: 150px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0.2rem 0;
+  list-style: none;
+  z-index: 10;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+.history-item {
+  background: transparent;
+  border: none;
+  color: white;
+  width: 100%;
+  text-align: left;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.history-item:hover {
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 /* Título do tempo */
@@ -109,6 +147,7 @@ body, html, #root {
   align-items: center;
   min-width: 80px;
 }
+
 /* Valor do tempo */
 .weather-item .value { 
   font-size: 2rem;
@@ -116,6 +155,7 @@ body, html, #root {
   margin-bottom: 0.3rem;
   text-align: center;
 }
+
 /* Label abaixo do valor */
 .weather-item .label { 
   font-size: 0.9rem;
@@ -132,17 +172,9 @@ body, html, #root {
 }
 
 .events-title {
-  font-size: 1.4rem;
-  margin-bottom: 0.5rem;
   font-weight: 600;
   font-size: 30px;
-}
-
-/* Subtítulo dos eventos */
-.events-subtitle {
   margin-bottom: 0.5rem;
-  font-weight: 500;
-  font-size: 1.1rem;
 }
 
 /* Lista de eventos */
@@ -161,6 +193,53 @@ body, html, #root {
 .no-events-message {
   font-style: italic;
   color: rgba(255, 255, 255, 0.6);
+}
+
+/* Grid para os cartões de eventos */
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Cartão de evento */
+.event-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Info dentro do cartão de evento */
+.event-info {
+  padding: 1rem;
+  color: #fff;
+  flex-grow: 1;
+}
+
+.event-info h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.event-info p {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  color: #ddd;
+}
+
+.event-info small {
+  font-size: 0.75rem;
+  color: #bbb;
 }
 
 /* Backgrounds diferentes consoante as condições meteorológicas */
@@ -214,49 +293,13 @@ body, html, #root {
   background-image: url('./assets/mist.jpg');
 }
 
-
-.events-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.event-card {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.2s ease;
-}
-
-.event-card:hover {
-  transform: translateY(-5px);
-}
-
-.event-info {
-  padding: 1rem;
-  color: #fff;
-  flex-grow: 1;
-}
-
-.event-info h4 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.2rem;
-}
-
-.event-info p {
-  font-size: 0.9rem;
+/* Mensagem de erro */
+.error-message {
+  background: rgba(255, 0, 0, 0.7);
+  padding: 0.8rem 1rem;
   margin-bottom: 1rem;
-  color: #ddd;
+  border-radius: 6px;
+  font-weight: 600;
+  text-align: center;
+  user-select: none;
 }
-
-.event-info small {
-  font-size: 0.75rem;
-  color: #bbb;
-}
-
-
