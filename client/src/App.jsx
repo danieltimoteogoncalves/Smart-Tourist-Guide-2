@@ -118,7 +118,6 @@ function App() {
                   <EventoCategoriaImagens categoria={event.category} />
                   <div className="event-info">
                     <h4>{event.title}</h4>
-                    <p>{event.description || 'Sem descrição disponível.'}</p>
                     <small>
                       {new Date(event.start_local).toLocaleString('pt-PT', {
                         day: '2-digit',

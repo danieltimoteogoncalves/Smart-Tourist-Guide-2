@@ -1,13 +1,17 @@
 const categoriaImagens = {
-  sports: 'https://cdn-icons-png.flaticon.com/512/2965/2965567.png',
-  concerts: 'https://cdn-icons-png.flaticon.com/512/727/727245.png',
+  community: 'src/eventosImgs/community.jpg',
+  concerts: 'src/eventosImgs/concert.jpg',
+  conferences: 'src/eventosImgs/conference.png',
+  expos: 'src/eventosImgs/expos.jpg',
+  festivals: 'src/eventosImgs/festival.jpg',
+  'performing-arts': 'src/eventosImgs/performingarts.jpg',
+  sports: 'src/eventosImgs/sports.jpg',
   'severe-weather': 'https://cdn-icons-png.flaticon.com/512/414/414974.png',
-  festivals: 'https://cdn-icons-png.flaticon.com/512/742/742750.png',
-  // adiciona mais categorias conforme necessário
 };
 
 const EventoCategoriaImagens = ({ categoria }) => {
-  const imagem = categoriaImagens[categoria.toLowerCase()] || 'https://cdn-icons-png.flaticon.com/512/565/565547.png'; // imagem default
+  const chave = categoria.toLowerCase();
+  const imagem = categoriaImagens[chave] || 'https://cdn-icons-png.flaticon.com/512/565/565547.png';
 
   return (
     <img
