@@ -158,11 +158,11 @@ body, html, #root {
 
 /* Backgrounds diferentes consoante as condições meteorológicas */
 .bg-clear-sky {
-  background-image: url('./assets/clearsky.jpeg');
+  background-image: url('./assets/ceulimpo.jpg');
 }
 
 .bg-few-clouds {
-  background-image: url('./assets/poucasnuvens.jpg');
+  background-image: url('./assets/fewclouds2.jpg');
 }
 
 .bg-scattered-clouds {
