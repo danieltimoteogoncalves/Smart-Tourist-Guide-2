@@ -12,43 +12,49 @@ function App() {
   const [error, setError] = useState(null);
   const [history, setHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
+  const [loading, setLoading] = useState(false); // estado loading
 
   const inputRef = useRef(null);
 
   const fetchWeatherAndEvents = (cityToSearch = city) => {
-  if (!cityToSearch.trim()) return;
+    if (!cityToSearch.trim()) return;
 
-  fetch(`http://localhost:5000/api?city=${cityToSearch}`)
-    .then(async (res) => {
-      const data = await res.json();
+    setLoading(true); // ativa o loading
 
-      if (!res.ok) {
-        throw new Error(data.error || 'Erro ao buscar dados');
-      }
+    fetch(`http://localhost:5000/api?city=${cityToSearch}`)
+      .then(async (res) => {
+        const data = await res.json();
 
-      setWeather(data.weather);
-      setEvents(data.events);
-      setError(null);
-
-      setHistory((prevHistory) => {
-        const cityLower = cityToSearch.toLowerCase();
-        if (prevHistory.find((c) => c.toLowerCase() === cityLower)) {
-          return prevHistory;
+        if (!res.ok) {
+          throw new Error(data.error || 'Erro ao buscar dados');
         }
-        return [cityToSearch, ...prevHistory].slice(0, 10);
-      });
 
-      setShowHistory(false); // esconde histórico
-      setCity(''); // limpa o input depois de pesquisar
-    })
-    .catch((error) => {
-      console.error('Erro ao buscar dados:', error);
-      setWeather(null);
-      setEvents([]);
-      setError(error.message);
-      setShowHistory(false);
-    });
-};
+        setWeather(data.weather);
+        setEvents(data.events);
+        setError(null);
+
+        setHistory((prevHistory) => {
+          const cityLower = cityToSearch.toLowerCase();
+          if (prevHistory.find((c) => c.toLowerCase() === cityLower)) {
+            return prevHistory;
+          }
+          return [cityToSearch, ...prevHistory].slice(0, 10);
+        });
+
+        setShowHistory(false);
+        setCity(''); // limpa input
+      })
+      .catch((error) => {
+        console.error('Erro ao buscar dados:', error);
+        setWeather(null);
+        setEvents([]);
+        setError(error.message);
+        setShowHistory(false);
+      })
+      .finally(() => {
+        setLoading(false); // desativa o loading sempre que acabar
+      });
+  };
 
   const handleHistoryClick = (cityFromHistory) => {
     setCity(cityFromHistory);
@@ -87,13 +93,21 @@ function App() {
           handleInputBlur={handleInputBlur}
         />
 
-        <WeatherInfo weather={weather} translateDescription={translateDescription} />
+        {loading ? (
+          <div className="loading-overlay">
+            <div className="spinner"></div>
+          </div>
+        ) : (
+          <>
+            <WeatherInfo weather={weather} translateDescription={translateDescription} />
 
-        <EventsList
-          events={events}
-          weather={weather}
-          EventoCategoriaImagens={EventoCategoriaImagens}
-        />
+            <EventsList
+              events={events}
+              weather={weather}
+              EventoCategoriaImagens={EventoCategoriaImagens}
+            />
+          </>
+        )}
       </div>
     </div>
   );
