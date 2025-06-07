@@ -1,17 +1,21 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import EventoCategoriaImagens from './EventoCategoriaImagens';
-import weatherTranslations from './weatherTranslations'; // Ajusta o caminho
+import weatherTranslations from './weatherTranslations';
 
 function App() {
   const [city, setCity] = useState('');
   const [weather, setWeather] = useState(null);
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
+  const [history, setHistory] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
 
-  const fetchWeatherAndEvents = () => {
-    if (!city.trim()) return;
+  const inputRef = useRef(null);
 
-    fetch(`http://localhost:5000/api?city=${city}`)
+  const fetchWeatherAndEvents = (cityToSearch = city) => {
+    if (!cityToSearch.trim()) return;
+
+    fetch(`http://localhost:5000/api?city=${cityToSearch}`)
       .then(async (res) => {
         const data = await res.json();
 
@@ -22,46 +26,109 @@ function App() {
         setWeather(data.weather);
         setEvents(data.events);
         setError(null);
+
+        setHistory((prevHistory) => {
+          const cityLower = cityToSearch.toLowerCase();
+          if (prevHistory.find((c) => c.toLowerCase() === cityLower)) {
+            return prevHistory;
+          }
+          return [cityToSearch, ...prevHistory].slice(0, 10);
+        });
+
+        setShowHistory(false); // esconde o histórico depois da pesquisa
       })
       .catch((error) => {
         console.error('Erro ao buscar dados:', error);
         setWeather(null);
         setEvents([]);
         setError(error.message);
+        setShowHistory(false);
       });
   };
 
-  const getWeatherClass = (desc) => {
-    if (!desc) return '';
-    return 'bg-' + desc.toLowerCase().replace(/\s+/g, '-');
+  const handleHistoryClick = (cityFromHistory) => {
+    setCity(cityFromHistory);
+    fetchWeatherAndEvents(cityFromHistory);
   };
 
-  const translateDescription = (desc) => {
-    if (!desc) return '';
-    return weatherTranslations[desc.toLowerCase()] || desc;
+  // Para evitar fechar o histórico antes de clicar numa cidade do histórico, usamos timeout no onBlur
+  const handleInputBlur = () => {
+    setTimeout(() => {
+      setShowHistory(false);
+    }, 150);
   };
 
   return (
     <div className={`app ${getWeatherClass(weather?.description)}`}>
       <div className="container">
         {/* Pesquisa */}
-        <div className="search-section">
+        <div className="search-section" style={{ position: 'relative' }}>
           <input
+            ref={inputRef}
             type="text"
             className="input-city"
             placeholder="Escreve o nome da cidade"
             value={city}
             onChange={(e) => setCity(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && fetchWeatherAndEvents()}
+            onFocus={() => setShowHistory(true)}
+            onBlur={handleInputBlur}
+            autoComplete="off"
           />
-          <button className="btn-search" onClick={fetchWeatherAndEvents}>
+          <button className="btn-search" onClick={() => fetchWeatherAndEvents()}>
             Pesquisar
           </button>
 
           {error && <div className="error-message">⚠️ {error}</div>}
+
+          {/* Histórico de pesquisa — aparece apenas se showHistory for true */}
+          {showHistory && history.length > 0 && (
+            <ul
+              className="search-history"
+              style={{
+                position: 'absolute',
+                top: '100%',
+                left: 0,
+                right: 0,
+                background: 'white',
+                border: '1px solid #ccc',
+                maxHeight: '150px',
+                overflowY: 'auto',
+                zIndex: 10,
+                margin: 0,
+                padding: '0.5rem',
+                listStyle: 'none',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                borderRadius: '0 0 4px 4px',
+              }}
+            >
+              {history.map((cityName, idx) => (
+                <li key={idx} style={{ padding: '0.3rem 0' }}>
+                  <button
+                    className="history-item"
+                    onClick={() => handleHistoryClick(cityName)}
+                    style={{
+                      cursor: 'pointer',
+                      background: 'none',
+                      border: 'none',
+                      color: '#007bff',
+                      textDecoration: 'underline',
+                      padding: 0,
+                      fontSize: '1rem',
+                      width: '100%',
+                      textAlign: 'left',
+                    }}
+                  >
+                    {cityName}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
-        {/* Tempo */}
+        {/* resto do teu código igual */}
+
         <div className="weather-section">
           {weather && (
             <>
@@ -108,7 +175,6 @@ function App() {
           )}
         </div>
 
-        {/* Eventos */}
         <div className="events-section">
           <h3 className="events-title">Eventos na cidade:</h3>
           {events.length > 0 ? (
@@ -140,6 +206,16 @@ function App() {
       </div>
     </div>
   );
+
+  function getWeatherClass(desc) {
+    if (!desc) return '';
+    return 'bg-' + desc.toLowerCase().replace(/\s+/g, '-');
+  }
+
+  function translateDescription(desc) {
+    if (!desc) return '';
+    return weatherTranslations[desc.toLowerCase()] || desc;
+  }
 }
 
 export default App;
