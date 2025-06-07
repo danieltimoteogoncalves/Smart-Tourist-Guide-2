@@ -8,6 +8,8 @@ body, html, #root {
   color: white;
 }
 
+
+
 .app {
   min-height: 100vh;
   display: flex;
@@ -104,7 +106,7 @@ body, html, #root {
 }
 
 .weather-item .value {
-  font-size: 1.6rem;
+  font-size: 2rem;
   font-weight: 700;
   margin-bottom: 0.3rem;
   text-align: center;
@@ -154,7 +156,7 @@ body, html, #root {
   color: rgba(255, 255, 255, 0.6);
 }
 
-/* Fundos para diferentes condições meteorológicas */
+/* Backgrounds diferentes consoante as condições meteorológicas */
 .bg-clear-sky {
   background-image: url('./assets/clearsky.jpeg');
 }
@@ -203,4 +205,49 @@ body, html, #root {
 
 .bg-mist {
   background-image: url('./assets/mist.jpg');
+}
+
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.event-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+}
+
+.event-info {
+  padding: 1rem;
+  color: #fff;
+  flex-grow: 1;
+}
+
+.event-info h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.event-info p {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  color: #ddd;
+}
+
+.event-info small {
+  font-size: 0.75rem;
+  color: #bbb;
 }

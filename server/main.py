@@ -7,7 +7,7 @@ app = Flask(__name__)
 CORS(app, origins=["http://localhost:5173"])  # Allow only your React dev server
 
 weather_key = "2b85de9d310ba0d2efc27f78d5403e30"
-activities_key = "m26Sf6eS2jXKHKp0kPzlLWOxS_d1w0V3nCILO1ax"
+activities_key = "j7ur4lC66UBSS7lM8BWhornlNIpMLqFpznQmAt_0"
 
 def get_weather(api_key, city):
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
@@ -19,6 +19,7 @@ def get_weather(api_key, city):
             "city": data['name'],
             "country": data['sys']['country'],
             "description": data['weather'][0]['description'].title(),
+            "icon": data['weather'][0]['icon'],
             "temp": data['main']['temp'],
             "humidity": data['main']['humidity'],
             "wind": data['wind']['speed'],
