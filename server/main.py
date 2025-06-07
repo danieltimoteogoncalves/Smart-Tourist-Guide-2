@@ -34,11 +34,15 @@ def get_weather(api_key, city):
 
 def get_restricted_categories_by_weather(weather_desc):
     weather_desc = weather_desc.lower()
+    exclusao = ["severe-weather", "school-holidays", "public-holidays", "observances", "politics", "conferences",
+                 "expos", "daylight-savings", "airport-delays", "disasters", "terror", "health-warnings", "academic"]
     if "rain" in weather_desc:
-        return ["sports", "concerts", "severe-weather"]
+        exclusao.append(["sports", "concerts"]) #Extend porque é mais do que uma categoria / append x2
+        return exclusao
     elif "snow" in weather_desc:
-        return ["sports", "severe-weather"]
-    return ["severe-weather"]
+        exclusao.append("sports")
+        return exclusao
+    return exclusao
 
 def get_filtered_events(api_key, lat, lon, weather_desc):
     url = "https://api.predicthq.com/v1/events/"
