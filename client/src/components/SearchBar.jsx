@@ -22,7 +22,6 @@ export default function SearchBar({
         onKeyDown={(e) => e.key === 'Enter' && fetchWeatherAndEvents()}
         onFocus={() => setShowHistory(true)}
         onBlur={handleInputBlur}
-        autoComplete="off"
       />
       <button className="btn-search" onClick={() => fetchWeatherAndEvents()}>
         Pesquisar
