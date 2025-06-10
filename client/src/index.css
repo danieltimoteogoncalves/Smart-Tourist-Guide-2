@@ -1,270 +1,287 @@
-/* Reset básico e corpo */
+/* Reset básico e corpo da página */
+/* Aplica margem e padding zero, altura total para ocupar 100% da viewport, fonte padrão e fundo com imagem + efeito escurecido */
 body, html, #root {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-image: url('./assets/default.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-color: rgba(0, 0, 0, 0.3); /* preta semitransparente */
-  background-blend-mode: darken;
-  color: white;
+  margin: 0; /* remove margens padrão */
+  padding: 0; /* remove padding padrão */
+  height: 100%; /* altura total da viewport */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* fonte padrão legível */
+  background-image: url('./assets/default.jpg'); /* imagem de fundo padrão */
+  background-size: cover; /* imagem cobre toda a área, cortando se necessário */
+  background-position: center; /* centra a imagem no fundo */
+  background-repeat: no-repeat; /* não repete a imagem */
+  background-color: rgba(0, 0, 0, 0.3); /* camada preta semitransparente para escurecer a imagem */
+  background-blend-mode: darken; /* modo de mistura para escurecer a imagem com a cor */
+  color: white; /* cor do texto branco */
 }
 
-
-
-/* Estilo global para o app */
+/* Estilo global para o elemento app */
+/* Define o container principal da app, com layout flex, centralização horizontal e padding */
 .app {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 2rem 1rem;
-  transition: background 0.5s ease;
-  position: relative;
-  overflow-x: hidden;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  min-height: 100vh; /* altura mínima igual à altura da viewport */
+  display: flex; /* layout flexível */
+  justify-content: center; /* centra horizontalmente o conteúdo */
+  align-items: flex-start; /* alinha o conteúdo no topo verticalmente */
+  padding: 2rem 1rem; /* espaçamento interno */
+  transition: background 0.5s ease; /* animação suave ao mudar o fundo */
+  position: relative; /* posicionamento relativo para elementos filhos posicionados */
+  overflow-x: hidden; /* evita scroll horizontal */
+  background-size: cover; /* fundo cobre toda a área */
+  background-position: center; /* centra a imagem de fundo */
+  background-repeat: no-repeat; /* não repetir a imagem */
 }
 
-/* Container central */
+/* Container central que envolve o conteúdo principal */
+/* Fundo semi-transparente para destacar o conteúdo sobre a imagem de fundo */
 .container {
-  background: rgba(0,0,0,0.55);
-  padding: 1.8rem 2rem;
-  border-radius: 12px;
-  max-width: 600px;
-  width: 100%;
-  box-shadow: 0 0 15px rgba(0,0,0,0.9);
-  position: relative;
-  z-index: 1;
-  color: white;
+  background: rgba(0,0,0,0.55); /* fundo preto translúcido */
+  padding: 1.8rem 2rem; /* espaçamento interno */
+  border-radius: 12px; /* cantos arredondados */
+  max-width: 600px; /* largura máxima para não esticar demais */
+  width: 100%; /* ocupa toda a largura possível até o máximo */
+  box-shadow: 0 0 15px rgba(0,0,0,0.9); /* sombra forte ao redor para destaque */
+  position: relative; /* posicionamento relativo para controlar z-index */
+  z-index: 1; /* fica acima do fundo, mas abaixo de elementos com z-index maior */
+  color: white; /* cor do texto branco */
 }
 
-/* Pesquisa */
+/* Secção da pesquisa */
+/* Layout flexível para colocar input e botão lado a lado */
 .search-section {
-  display: flex;
-  margin-bottom: 1.5rem;
-  position: relative;
+  display: flex; /* layout flexível horizontal */
+  margin-bottom: 1.5rem; /* espaço abaixo da secção */
+  position: relative; /* para posicionar o dropdown de histórico */
 }
 
-/* Campo de entrada estilizado */
+/* Campo de entrada da cidade */
+/* Input com expansão automática e design arredondado, sem bordas */
 .input-city { 
-  flex: 1;
-  padding: 0.6rem 1rem;
-  font-size: 1rem;
-  border-radius: 6px 0 0 6px;
-  border: none;
-  outline: none;
-  background-color: rgba(240, 248, 255, 0.3);
-  color: white;
+  flex: 1; /* ocupa todo o espaço disponível */
+  padding: 0.6rem 1rem; /* espaçamento interno confortável */
+  font-size: 1rem; /* tamanho da fonte legível */
+  border-radius: 6px 0 0 6px; /* cantos arredondados apenas na esquerda */
+  border: none; /* remove bordas padrão */
+  outline: none; /* remove outline ao focar */
+  background-color: rgba(240, 248, 255, 0.3); /* fundo branco translúcido */
+  color: white; /* texto branco */
 }
 
-/* Placeholder estilizado */
+/* Estilo do placeholder no input */
+/* Cor branca semitransparente para o texto do placeholder */
 .input-city::placeholder {
   color: rgba(255, 255, 255, 0.7);
 }
 
 /* Botão de pesquisa */
+/* Botão com fundo escuro, texto branco e cantos arredondados do lado direito */
 .btn-search { 
-  padding: 0 1.2rem;
-  font-size: 1rem;
-  border: none;
-  background-color: #353535;
-  color: white;
-  cursor: pointer;
-  border-radius: 0 6px 6px 0;
-  transition: background-color 0.3s ease;
+  padding: 0 1.2rem; /* espaçamento horizontal */
+  font-size: 1rem; /* tamanho da fonte */
+  border: none; /* sem bordas */
+  background-color: #353535; /* fundo cinza escuro */
+  color: white; /* texto branco */
+  cursor: pointer; /* cursor em forma de mão para indicar clicável */
+  border-radius: 0 6px 6px 0; /* cantos arredondados só na direita */
+  transition: background-color 0.3s ease; /* transição suave da cor do fundo */
 }
 
+/* Efeito hover no botão */
+/* Fundo mais claro ao passar o rato */
 .btn-search:hover {
   background-color: #525252;
 }
 
-/* Histórico de pesquisas */
+/* Lista do histórico de pesquisas */
+/* Dropdown abaixo do input, com fundo escuro semi-transparente e scroll vertical se necessário */
 .search-history {
-  position: absolute;
-  top: 100%;
+  position: absolute; /* posicionamento absoluto relativo ao pai .search-section */
+  top: 100%; /* posiciona exatamente abaixo do input */
   left: 0;
   right: 0;
-  background: rgba(0,0,0,0.7);
-  border-radius: 0 0 6px 6px;
-  max-height: 150px;
-  overflow-y: auto;
-  margin: 0;
-  padding: 0.2rem 0;
-  list-style: none;
-  z-index: 10;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.7); /* fundo preto semi-transparente */
+  border-radius: 0 0 6px 6px; /* cantos arredondados em baixo */
+  max-height: 150px; /* altura máxima para scroll */
+  overflow-y: auto; /* scroll vertical se o conteúdo for maior */
+  margin: 0; /* remove margens */
+  padding: 0.2rem 0; /* padding vertical */
+  list-style: none; /* remove os marcadores de lista */
+  z-index: 10; /* fica acima de outros elementos */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4); /* sombra para dar destaque */
 }
 
+/* Itens individuais do histórico */
+/* Botões transparentes que ocupam toda a largura, com texto branco e efeito hover */
 .history-item {
-  background: transparent;
-  border: none;
-  color: white;
-  width: 100%;
-  text-align: left;
-  padding: 0.4rem 1rem;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.2s ease;
+  background: transparent; /* fundo transparente */
+  border: none; /* sem bordas */
+  color: white; /* texto branco */
+  width: 100%; /* ocupa toda a largura do dropdown */
+  text-align: left; /* texto alinhado à esquerda */
+  padding: 0.4rem 1rem; /* espaçamento confortável */
+  cursor: pointer; /* cursor pointer para indicar clicável */
+  font-size: 0.9rem; /* fonte ligeiramente menor */
+  transition: background-color 0.2s ease; /* transição suave no hover */
 }
 
+/* Efeito hover nos itens do histórico */
+/* Fundo esbatido branco para feedback visual */
 .history-item:hover {
   background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* Título do tempo */
+/* Título da secção do tempo */
+/* Texto centralizado, com margem inferior e tamanho maior */
 .weather-title {
-  text-align: center;
-  margin-bottom: 1.2rem;
-  font-weight: 600;
-  font-size: 30px;
+  text-align: center; /* centraliza o texto */
+  margin-bottom: 1.2rem; /* margem inferior para espaçar */
+  font-weight: 600; /* peso da fonte semi-negrito */
+  font-size: 30px; /* tamanho da fonte maior */
 }
 
-/* Dados do temperatura */
+/* Valor da temperatura */
+/* Texto grande e centrado para destaque */
 .weather-temp {
-  text-align: center;
-  margin-bottom: 1.2rem;
-  font-weight: 600;
-  font-size: 50px;
+  text-align: center; /* centraliza o texto */
+  margin-bottom: 1.2rem; /* margem inferior */
+  font-weight: 600; /* semi-negrito */
+  font-size: 50px; /* tamanho grande */
 }
 
-/* Dados do tempo lado a lado */
+/* Container para os dados do tempo (ex: humidade, vento) lado a lado */
+/* Layout flexível com espaçamento entre itens */
 .weather-data {
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  flex-wrap: nowrap;
+  display: flex; /* layout horizontal */
+  justify-content: center; /* centraliza horizontalmente */
+  gap: 3rem; /* espaço entre os itens */
+  flex-wrap: nowrap; /* impede quebra de linha */
 }
 
-/* Item de tempo */
+/* Cada item individual do tempo */
+/* Layout vertical, alinhado ao centro */
 .weather-item { 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 80px;
+  display: flex; /* flex para alinhar texto */
+  flex-direction: column; /* itens em coluna */
+  align-items: center; /* centraliza horizontalmente */
+  min-width: 80px; /* largura mínima para consistência */
 }
 
-/* Valor do tempo */
+/* Valor numérico do dado do tempo */
+/* Texto maior e em negrito com margem inferior */
 .weather-item .value { 
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 0.3rem;
-  text-align: center;
+  font-size: 2rem; /* fonte grande */
+  font-weight: 700; /* negrito */
+  margin-bottom: 0.3rem; /* espaço abaixo */
+  text-align: center; /* centralizado */
 }
 
-/* Label abaixo do valor */
+/* Label descritiva abaixo do valor */
+/* Texto mais pequeno, translúcido e com capitalização automática */
 .weather-item .label { 
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.7);
-  text-transform: capitalize;
-  user-select: none;
-  text-align: center;
+  font-size: 0.9rem; /* fonte mais pequena */
+  color: rgba(255, 255, 255, 0.7); /* cor branca translúcida */
+  text-transform: capitalize; /* primeira letra maiúscula */
+  user-select: none; /* não permite seleção do texto */
+  text-align: center; /* centraliza texto */
 }
 
-/* Eventos */
+/* Secção dos eventos */
+/* Espaço em cima e texto centrado */
 .events-section {
-  margin-top: 2rem;
-  text-align: center;
+  margin-top: 2rem; /* margem superior */
+  text-align: center; /* texto centralizado */
 }
 
+/* Título da secção dos eventos */
+/* Negrito, grande e com margem inferior */
 .events-title {
-  font-weight: 600;
-  font-size: 30px;
-  margin-bottom: 0.5rem;
+  font-weight: 600; /* semi-negrito */
+  font-size: 30px; /* tamanho grande */
+  margin-bottom: 0.5rem; /* margem inferior */
 }
 
-/* Lista de eventos */
 .events-list {
-  list-style: none;
-  padding: 0 0.5rem;
-  text-align: left;
-  margin: 0;
+  list-style: none;              /* Remove os marcadores da lista */
+  padding: 0 0.5rem;             /* Espaço interno: 0 em cima/baixo e 0.5rem nas laterais */
+  text-align: left;              /* Alinha o texto à esquerda */
+  margin: 0;                     /* Remove margens externas */
 }
 
 .event-item {
-  margin-bottom: 0.6rem;
-  font-size: 0.95rem;
+  margin-bottom: 0.6rem;         /* Espaço abaixo de cada item para separação */
+  font-size: 0.95rem;            /* Tamanho da fonte ligeiramente menor que o padrão */
 }
 
 .no-events-message {
-  font-style: italic;
-  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;            /* Texto em itálico para destaque */
+  color: rgba(255, 255, 255, 0.6); /* Cor branca translúcida (60% opacidade) */
 }
 
-/* Grid para os cartões de eventos */
 .events-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
+  display: grid;                 /* Define um grid CSS para layout */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Colunas responsivas com mínimo 280px */
+  gap: 1rem;                    /* Espaço entre as colunas e linhas */
+  margin-top: 1rem;             /* Espaço acima da grid */
 }
 
-/* Cartão de evento */
 .event-card {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.2s ease;
+  background: rgba(255, 255, 255, 0.15); /* Fundo branco translúcido (15% opacidade) */
+  backdrop-filter: blur(10px);  /* Desfoque no fundo atrás do cartão */
+  border-radius: 8px;           /* Bordas arredondadas */
+  overflow: hidden;             /* Esconde conteúdo que ultrapasse o cartão */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* Sombra suave para profundidade */
+  display: flex;                /* Flexbox para layout interno */
+  flex-direction: column;       /* Coluna para os elementos internos */
+  transition: transform 0.2s ease; /* Animação suave para transformações */
 }
 
 .event-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-5px);  /* Levanta o cartão 5px ao passar o rato */
 }
 
-/* Info dentro do cartão de evento */
 .event-info {
-  padding: 1rem;
-  color: #fff;
-  flex-grow: 1;
+  padding: 1rem;                /* Espaçamento interno */
+  color: #fff;                  /* Texto branco */
+  flex-grow: 1;                 /* Ocupa o espaço disponível na flexbox */
 }
 
 .event-info h4 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.2rem;
+  margin: 0 0 0.5rem 0;         /* Margem só em baixo para separar do parágrafo */
+  font-size: 1.2rem;            /* Tamanho da fonte do título */
 }
 
 .event-info p {
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-  color: #ddd;
+  font-size: 0.9rem;            /* Tamanho da fonte do texto */
+  margin-bottom: 1rem;          /* Espaço abaixo do parágrafo */
+  color: #ddd;                  /* Cor cinzenta clara */
 }
 
 .event-info small {
-  font-size: 0.75rem;
-  color: #bbb;
+  font-size: 0.75rem;           /* Texto pequeno para detalhes */
+  color: #bbb;                  /* Cor cinzenta média */
 }
 
-/* Backgrounds diferentes consoante as condições meteorológicas */
+/* Backgrounds consoante as condições meteorológicas */
 .bg-clear-sky {
-  background-image: url('./assets/ceulimpo.jpg');
+  background-image: url('./assets/ceulimpo.jpg'); /* Céu limpo */
 }
 
 .bg-few-clouds {
-  background-image: url('./assets/fewclouds2.jpg');
+  background-image: url('./assets/fewclouds2.jpg'); /* Poucas nuvens */
 }
 
 .bg-scattered-clouds {
-  background-image: url('./assets/scatteredclouds.jpg');
+  background-image: url('./assets/scatteredclouds.jpg'); /* Nuvens dispersas */
 }
 
 .bg-broken-clouds {
-  background-image: url('./assets/broken-clouds-1537880.jpg');
+  background-image: url('./assets/broken-clouds-1537880.jpg'); /* Nuvens partidas */
 }
 
 .bg-clear {
-  background-image: url('./assets/clear.jpg');
+  background-image: url('./assets/clear.jpg'); /* Céu claro */
 }
 
 .bg-overcast-clouds {
-  background-image: url('./assets/overcastclouds.jpg');
+  background-image: url('./assets/overcastclouds.jpg'); /* Céu encoberto */
 }
 
 .bg-light-rain,
@@ -274,64 +291,61 @@ body, html, #root {
 .bg-freezing-rain,
 .bg-shower-rain,
 .bg-rain {
-  background-image: url('./assets/rain.jpg');
+  background-image: url('./assets/rain.jpg'); /* Chuva (diversos níveis) */
 }
 
 .bg-ragged-shower-rain {
-  background-image: url('./assets/raggedshowerrain.jpg');
+  background-image: url('./assets/raggedshowerrain.jpg'); /* Chuva irregular */
 }
 
 .bg-thunderstorm {
-  background-image: url('./assets/thunderstorm.jpg');
+  background-image: url('./assets/thunderstorm.jpg'); /* Trovoada */
 }
 
 .bg-snow {
-  background-image: url('./assets/snow.jpg');
+  background-image: url('./assets/snow.jpg'); /* Neve */
 }
 
 .bg-mist {
-  background-image: url('./assets/mist.jpg');
+  background-image: url('./assets/mist.jpg'); /* Névoa */
 }
 
-/* Mensagem de erro */
 .error-message {
-  background: rgba(255, 0, 0, 0.7);
-  padding: 0.8rem 1rem;
-  margin-bottom: 1rem;
-  border-radius: 6px;
-  font-weight: 600;
-  text-align: center;
-  user-select: none;
+  background: rgba(255, 0, 0, 0.7); /* Fundo vermelho translúcido para erro */
+  padding: 0.8rem 1rem;           /* Espaço interno */
+  margin-bottom: 1rem;            /* Espaço abaixo */
+  border-radius: 6px;             /* Bordas arredondadas */
+  font-weight: 600;               /* Texto em negrito */
+  text-align: center;             /* Texto centrado */
+  user-select: none;              /* Impede seleção do texto */
 }
 
-/* Loading Overlay - cobre toda a área do ecrã */
 .loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
+  position: fixed;                /* Posicionamento fixo em relação à janela */
+  top: 0;                        /* Topo da janela */
+  left: 0;                       /* Esquerda da janela */
+  width: 100vw;                  /* Largura total da viewport */
+  height: 100vh;                 /* Altura total da viewport */
+  background: rgba(0,0,0,0.7);  /* Fundo preto translúcido */
+  display: flex;                 /* Flexbox para centralizar conteúdo */
+  justify-content: center;       /* Centra horizontalmente */
+  align-items: center;           /* Centra verticalmente */
+  z-index: 9999;                 /* Fica acima de todos os elementos */
 }
 
-/* Spinner simples */
 .spinner {
-  border: 8px solid rgba(255, 255, 255, 0.2);
-  border-top: 8px solid #61dafb; /* cor do spinner */
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  animation: spin 1s linear infinite;
+  border: 8px solid rgba(255, 255, 255, 0.2); /* Borda clara translúcida */
+  border-top: 8px solid #61dafb;               /* Cor azul para a parte superior */
+  border-radius: 50%;                          /* Forma circular */
+  width: 60px;                                 /* Largura */
+  height: 60px;                                /* Altura */
+  animation: spin 1s linear infinite;          /* Animação de rotação contínua */
 }
 
-/* Animação do spinner */
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% { transform: rotate(0deg); }              /* Começa sem rotação */
+  100% { transform: rotate(360deg); }           /* Completa uma volta completa */
 }
+
 
 
