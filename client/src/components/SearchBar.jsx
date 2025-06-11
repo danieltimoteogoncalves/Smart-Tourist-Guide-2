@@ -1,79 +1,49 @@
-// Componente funcional que representa a barra de pesquisa
 export default function SearchBar({
-  city,                  // Estado da cidade introduzida pelo utilizador
-  setCity,               // Função para atualizar o estado da cidade
-  fetchWeatherAndEvents, // Função que vai buscar os dados do tempo e eventos
-  showHistory,           // Estado booleano para mostrar ou ocultar o histórico
-  setShowHistory,        // Função para atualizar o estado do histórico visível
-  history,               // Lista de cidades pesquisadas anteriormente
-  handleHistoryClick,    // Função chamada quando o utilizador clica num item do histórico
-  inputRef,              // Referência ao input (usado para focar ou controlar blur)
-  error,                 // Mensagem de erro (por exemplo, cidade não encontrada)
-  handleInputBlur,       // Função chamada quando o input perde o foco
+  city,              // Valor atual da cidade escrita no input
+  setCity,           // Função para atualizar o valor da cidade
+  fetchWeatherAndEvents, // Função para buscar o tempo e eventos da cidade
+  showHistory,       // Booleano que indica se o histórico de pesquisa está visível
+  setShowHistory,    // Função para mostrar ou esconder o histórico
+  history,           // Array com cidades pesquisadas anteriormente
+  handleHistoryClick,// Função chamada quando se clica numa cidade do histórico
+  inputRef,          // Referência para o elemento input (para controlo direto)
+  error,             // Mensagem de erro a mostrar, se existir
+  handleInputBlur,   // Função chamada quando o input perde o foco
 }) {
   return (
-    <div className="search-section" style={{ position: 'relative' }}>
-      {/* Campo de input para o nome da cidade */}
+    <div className="search-section">
+      {/* Input de texto para escrever o nome da cidade */}
       <input
-        ref={inputRef} // Referência para aceder ao input externamente
-        type="text"
-        className="input-city"
-        placeholder="Escreve o nome da cidade"
-        value={city} // Valor controlado pela prop `city`
-        onChange={(e) => setCity(e.target.value)} // Atualiza a cidade ao escrever
-        onKeyDown={(e) => e.key === 'Enter' && fetchWeatherAndEvents()} // Pesquisa ao pressionar Enter
-        onFocus={() => setShowHistory(true)} // Mostra o histórico ao focar o input
-        onBlur={handleInputBlur} // Oculta histórico após perder o foco (com possível atraso)
+        ref={inputRef}                      // Associa a referência ao input para controlo direto
+        type="text"                        // Tipo do input: texto
+        className="input-city"             // Classe CSS para estilização
+        placeholder="Escreva o nome da cidade" // Texto placeholder para orientar o utilizador
+        value={city}                      // Valor controlado do input (estado da cidade)
+        onChange={(e) => setCity(e.target.value)} // Atualiza o estado da cidade ao escrever
+        onKeyDown={(e) => e.key === 'Enter' && fetchWeatherAndEvents()} // Se premir Enter, busca dados
+        onFocus={() => setShowHistory(true)}   // Quando o input recebe foco, mostra o histórico
+        onBlur={handleInputBlur}                // Quando o input perde foco, executa função para esconder histórico
       />
 
-      {/* Botão para acionar a pesquisa */}
+      {/* Botão para disparar a pesquisa manualmente */}
       <button className="btn-search" onClick={() => fetchWeatherAndEvents()}>
         Pesquisar
       </button>
 
-      {/* Se houver erro, mostra uma mensagem de aviso */}
+      {/* Se existir erro, mostra mensagem de erro */}
       {error && <div className="error-message">⚠️ {error}</div>}
 
-      {/* Mostra o histórico de pesquisa se estiver ativo e contiver entradas */}
+      {/* Se o histórico estiver ativo e tiver itens, mostra lista do histórico */}
       {showHistory && history.length > 0 && (
-        <ul
-          className="search-history"
-          style={{
-            position: 'absolute',     // Para posicionar abaixo do input
-            top: '100%',              // Logo abaixo do input
-            left: 0,
-            right: 0,
-            background: 'white',
-            border: '1px solid #ccc',
-            maxHeight: '150px',
-            overflowY: 'auto',
-            zIndex: 10,
-            margin: 0,
-            padding: '0.5rem',
-            listStyle: 'none',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.15)', // Sombra leve
-            borderRadius: '0 0 4px 4px', // Cantos arredondados em baixo
-          }}
-        >
-          {/* Lista cada cidade pesquisada anteriormente */}
+        <ul className="search-history">
+          {/* Itera pelo array history e cria um botão para cada cidade */}
           {history.map((cityName, idx) => (
-            <li key={idx} style={{ padding: '0.3rem 0' }}>
+            <li key={idx}>
               <button
                 className="history-item"
-                onClick={() => handleHistoryClick(cityName)} // Pesquisa ao clicar na cidade
-                style={{
-                  cursor: 'pointer',
-                  background: 'none',
-                  border: 'none',
-                  color: '#007bff',             // Cor azul típica de links
-                  textDecoration: 'underline',  // Sublinhar
-                  padding: 0,
-                  fontSize: '1rem',
-                  width: '100%',
-                  textAlign: 'left',
-                }}
+                onClick={() => handleHistoryClick(cityName)} // Ao clicar, usa a cidade do histórico
               >
-                {cityName}
+                {cityName}  {/* Nome da cidade do histórico */}
               </button>
             </li>
           ))}

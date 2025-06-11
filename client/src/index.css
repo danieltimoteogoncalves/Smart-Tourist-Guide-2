@@ -218,7 +218,7 @@ body, html, #root {
 .events-grid {
   display: grid;                 /* Define um grid CSS para layout */
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Colunas responsivas com mínimo 280px */
-  gap: 1rem;                    /* Espaço entre as colunas e linhas */
+  gap: 2rem;                    /* Espaço entre as colunas e linhas */
   margin-top: 1rem;             /* Espaço acima da grid */
 }
 
