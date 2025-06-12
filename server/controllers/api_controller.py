@@ -41,5 +41,5 @@ def handle_api():
     # Devolve uma resposta JSON com os dados do tempo e os eventos filtrados
     return jsonify({
         "weather": weather,
-        "events": events # <-- ERRO aqui: 'eventsa' deveria ser 'events'
+        "events": events 
     })
