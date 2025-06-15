@@ -16,7 +16,7 @@ api_bp = Blueprint("api", __name__, url_prefix="/api")
 weather_key = "2b85de9d310ba0d2efc27f78d5403e30"
 
 # Chave da API para obter dados de atividades/eventos
-activities_key = "j7ur4lC66UBSS7lM8BWhornlNIpMLqFpznQmAt_0"
+activities_key = "suknEVPz8O5YcYEgH_vc0akwDo_4Rl3KG4zXGzNp"
 
 # Define uma rota GET em "/api/" que trata os pedidos à API
 @api_bp.route("/", methods=["GET"])
